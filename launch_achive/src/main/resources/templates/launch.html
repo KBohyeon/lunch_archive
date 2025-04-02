@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>성공을 위한 다목적 런치 아카이브</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>성공을 위한 다목적 런치 아카이브</h1>
+        
+        <form th:action="@{/create}" method="post">
+            <label for="name">이름:</label>
+            <select id="name" name="name" required>
+                <option value="김건우">김건우</option>
+                <option value="민유진">민유진</option>
+                <option value="변서윤">변서윤</option>
+                <option value="조승우">조승우</option>
+                <option value="정태수">정태수</option>
+                <option value="김지운">김지운</option>
+				<option value="김보현">김보현</option>
+            </select>
+            <label for="date">날짜:</label>
+            <input type="date" id="date" name="date" required>
+            <label for="meal">점심 메뉴:</label>
+            <input type="text" id="meal" name="meal" required>
+            <label for="review">한줄평:</label>
+            <input type="text" id="review" name="review" required>
+        
+            <button type="submit">추가</button>
+        </form>
+
+        <!-- 삭제 버튼 (모달 창 호출) -->
+        <button type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">
+            모든 데이터 삭제
+        </button>
+
+        <!-- 모달 창 (삭제 확인) -->
+        <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteConfirmModalLabel">⚠️ 삭제 확인</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+                    </div>
+                    <div class="modal-body">
+                        정말 모든 데이터를 삭제하시겠습니까? <br>
+                        이 작업은 되돌릴 수 없습니다.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        <form id="deleteForm" th:action="@{/delete}" method="post">
+                            <button type="submit" class="btn btn-danger">삭제</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered mt-3">
+                <thead class="table-light">
+                    <tr>
+                        <th>이름</th>
+                        <th>날짜</th>
+                        <th>점심 메뉴</th>
+                        <th>한줄평</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="launch : ${launchList}">
+                        <td th:text="${launch.name}"></td>
+                        <td th:text="${launch.createDate}"></td>
+                        <td th:text="${launch.meal}"></td>
+                        <td th:text="${launch.review}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
